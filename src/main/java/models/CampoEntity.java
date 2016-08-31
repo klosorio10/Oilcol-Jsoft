@@ -2,7 +2,9 @@
  
 import com.sun.istack.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
@@ -37,10 +39,14 @@ public class CampoEntity implements Serializable {
  
     private String ciudad;
  
+    @OneToMany(cascade=ALL, mappedBy="campo")
+    private List<PozoEntity> pozos= new ArrayList<PozoEntity>();
+
    
  
     public CampoEntity() {
- 
+         //pozos= new ArrayList<PozoEntity>();
+                  
     }
  
     public CampoEntity(String nameN, String surnameN, int ageN, String telephoneN, String cellphoneN, String addressN, String cityN, String countryN, boolean winnerN, String username, String password) {
@@ -49,6 +55,30 @@ public class CampoEntity implements Serializable {
        
     }
  
+    /*public PozoEntity agregarPozo(String nameN){
+          if(pozos==null)pozos=(List<PozoEntity>) new ArrayList<PozoEntity>();
+         PozoEntity pozo=new PozoEntity();
+         pozo.setNombre(nameN);
+         pozos.add(pozo);
+         return pozo;
+    }*/
+    
+    
+     public List<PozoEntity> getPozos() {
+        return pozos;
+    }
+
+    public void setPozos(List<PozoEntity> pozos) {
+        this.pozos = pozos;
+    }
+    
+    public PozoEntity getPozo(int i) {
+        return this.pozos.get(i);
+    }
+    
+    public void setPozo(int i,PozoEntity pozo) {
+        this.pozos.set(i,pozo);
+    }
     
     public Long getId() {
         return id;
@@ -74,5 +104,6 @@ public class CampoEntity implements Serializable {
         this.ciudad = ciudad;
     }
  
+    
    
 }

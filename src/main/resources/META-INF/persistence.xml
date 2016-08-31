@@ -5,6 +5,7 @@
     <class>models.Competitor</class>
     <class>models.Producto</class>
     <class>models.CampoEntity</class>
+    <class>models.PozoEntity</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/sample"/>
       <property name="javax.persistence.jdbc.user" value="app"/>

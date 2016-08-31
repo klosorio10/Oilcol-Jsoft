@@ -1,7 +1,13 @@
 
 package dto;
 
+import java.util.ArrayList;
 import java.util.List;
+import models.PozoEntity;
+
+
+
+
 
 /**
  *
@@ -15,16 +21,33 @@ public class CampoDTO {
     
     private String ciudad;
         
-
+    private List<PozoDTO> pozos=new ArrayList<PozoDTO>();
     
-    private List<PozoDTO>pozos;
+    private PozoDTO pozo;
 
+    public PozoDTO getPozo() {
+        return pozo;
+    }
+
+    public void setPozo(PozoDTO pozo) {
+        this.pozo = pozo;
+    }
     
     
     public CampoDTO(){
         
     }
     
+    public PozoDTO agregarPozo(String nombreP){
+        
+        PozoDTO nuevo=new PozoDTO();
+        nuevo.setNombre(nombreP);
+        nuevo.setEmergencia(false);
+        nuevo.setEstado("normal");
+        pozos.add(nuevo);
+        return nuevo;
+    }
+            
     public Long getId() {
         return id;
     }
@@ -50,13 +73,33 @@ public class CampoDTO {
     }
 
       
-
     public List<PozoDTO> getPozos() {
         return pozos;
     }
+    
+   /* public List<PozoEntity> getPozosEntity( List<PozoDTO> pozosDTO) {
+        List<PozoEntity>lista=new List<PozoEntity>
+        for(pozos)
+        return pozos;
+    }*/
 
     public void setPozos(List<PozoDTO> pozos) {
         this.pozos = pozos;
+    }
+    
+    
+    public PozoEntity convertirAentidad(PozoDTO dto){
+        PozoEntity pozoN=new PozoEntity();
+        pozoN.setNombre(dto.getNombre());
+        return pozoN;
+    }
+    
+     
+    public PozoDTO convertirAdto(PozoEntity entity){
+        PozoDTO pozoN=new PozoDTO();
+        pozoN.setId(entity.getId());
+        pozoN.setNombre(entity.getNombre());
+        return pozoN;
     }
    
 }
