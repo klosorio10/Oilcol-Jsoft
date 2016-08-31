@@ -8,25 +8,21 @@ package dto;
 
 /**
  *
- * @author Mauricio
+ * @author kl.osorio10
  */
 public class UsuarioDTO {
  
     private String name;
-    
-    private String surname;
-    
-    private int age;
-    
+
     private String telephone;
     
     private String cellphone;
     
     private String address;
     
-    private String city;
+    private String cargo;
     
-    private String country;
+    private String cuidad;
     
     private String username;
     
@@ -44,20 +40,12 @@ public class UsuarioDTO {
         this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getCargo() {
+        return cargo;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
 
     public String getTelephone() {
@@ -84,20 +72,12 @@ public class UsuarioDTO {
         this.address = address;
     }
 
-    public String getCity() {
-        return city;
+    public String getCuidad() {
+        return cuidad;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCuidad(String cuidad) {
+        this.cuidad = cuidad;
     }
     
     

@@ -6,114 +6,99 @@
 
 package dto;
 
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+
 /**
  *
- * @author Mauricio
+ * @author kl.osorio10
  */
 public class ReporteDTO {
  
-    private String name;
+ //   private date date;
     
-    private String surname;
+    private String zonaGeo;
     
-    private int age;
+    private String estado;
+
+    private String region;
     
-    private String telephone;
+    private CampoDTO[] campos;
     
-    private String cellphone;
+    private String emergencia;
     
-    private String address;
+    private double consumoCrudo;
     
-    private String city;
+    private double consumoAgua;
     
-    private String country;
-    
-    private String username;
-    
-    private String password;
+    private String temporalidad;
     
     public ReporteDTO(){
         
     }
 
-    public String getName() {
-        return name;
+    public String getZonaGeo() {
+        return zonaGeo;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setZonaGeo(String zonaGeo) {
+        this.zonaGeo = zonaGeo;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
-    public int getAge() {
-        return age;
+    public String getRegion() {
+        return region;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setRegion(String region) {
+        this.region = region;
     }
 
-    public String getTelephone() {
-        return telephone;
+    public CampoDTO[] getCampos() {
+        return campos;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
+    public void setCampos(CampoDTO[] campos) {
+        this.campos = campos;
     }
 
-    public String getCellphone() {
-        return cellphone;
+    public String getEmergencia() {
+        return emergencia;
     }
 
-    public void setCellphone(String cellphone) {
-        this.cellphone = cellphone;
+    public void setEmergencia(String emergencia) {
+        this.emergencia = emergencia;
     }
 
-    public String getAddress() {
-        return address;
+    public double getConsumoCrudo() {
+        return consumoCrudo;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setConsumoCrudo(double consumoCrudo) {
+        this.consumoCrudo = consumoCrudo;
     }
 
-    public String getCity() {
-        return city;
+    public double getConsumoAgua() {
+        return consumoAgua;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setConsumoAgua(double consumoAgua) {
+        this.consumoAgua = consumoAgua;
     }
 
-    public String getCountry() {
-        return country;
+    public String getTemporalidad() {
+        return temporalidad;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setTemporalidad(String temporalidad) {
+        this.temporalidad = temporalidad;
     }
-    
-    
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+       
+   
 }
