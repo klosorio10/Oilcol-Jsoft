@@ -30,7 +30,7 @@ import org.codehaus.jettison.json.JSONObject;
 @Produces(MediaType.APPLICATION_JSON)
 public class CompetitorService {
 
-    @PersistenceContext(unitName = "Laboratorio-JPA_LAB3")
+    @PersistenceContext(unitName = "Oilcol")
     EntityManager entityManager; 
 
      @PostConstruct

@@ -44,7 +44,7 @@ public class PersistenceManager {
     }
  
     protected void createEntityManagerFactory() {
-        this.emf = Persistence.createEntityManagerFactory("Laboratorio-JPA_LAB3", System.getProperties());
+        this.emf = Persistence.createEntityManagerFactory("Oilcol", System.getProperties());
         if (DEBUG) {
             System.out.println("Persistence started at " + new java.util.Date());
         }

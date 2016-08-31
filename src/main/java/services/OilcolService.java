@@ -5,6 +5,7 @@
  */
 package services;
 
+import dto.CampoDTO;
 import main.PersistenceManager;
 import models.Competitor;
 import models.CompetitorDTO;
@@ -20,6 +21,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import models.CampoEntity;
 import org.codehaus.jettison.json.JSONObject;
 
 /**
@@ -30,8 +32,9 @@ import org.codehaus.jettison.json.JSONObject;
 @Produces(MediaType.APPLICATION_JSON)
 public class OilcolService {
 
-    @PersistenceContext(unitName = "Laboratorio-JPA_LAB3")
+    @PersistenceContext(unitName = "Oilcol")
     EntityManager entityManager; 
+    
 
      @PostConstruct
     public void init() {
@@ -46,13 +49,41 @@ public class OilcolService {
     @Path("/get")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
-        Query q = entityManager.createQuery("select u from Competitor u order by u.surname ASC");
-        List<Competitor> competitors = q.getResultList();
-        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(competitors).build();
+        Query q = entityManager.createQuery("select u from CampoEntity u order by u.id");
+        List<CampoEntity> campos = q.getResultList();
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(campos).build();
     } 
 
+    @POST
+    @Path("/agregar")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createCampo(CampoDTO campo) {
+        JSONObject rta = new JSONObject();
+        CampoEntity campoTmp = new CampoEntity();
+        campoTmp.setCiudad(campo.getCiudad());
+        campoTmp.setNombre(campo.getNombre());
+        
+ 
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(campoTmp);
+            entityManager.getTransaction().commit();
+            entityManager.refresh(campoTmp);
+            rta.put("campo_id", campoTmp.getId());
+        } catch (Throwable t) {
+            t.printStackTrace();
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            campoTmp = null;
+        } finally {
+            entityManager.clear();
+            entityManager.close();
+        }
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(rta).build();
+    } 
     
-       @POST
+    @POST
     @Path("/add")
     @Produces(MediaType.APPLICATION_JSON)
     public Response createCompetitor(CompetitorDTO competitor) {
