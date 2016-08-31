@@ -34,6 +34,7 @@ public class OilcolService {
 
     @PersistenceContext(unitName = "Oilcol")
     EntityManager entityManager; 
+    
 
      @PostConstruct
     public void init() {
