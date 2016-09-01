@@ -26,7 +26,7 @@ import org.codehaus.jettison.json.JSONObject;
  *
  * @author Mauricio
  */
-@Path("/competitors")
+@Path("/usuarios")
 @Produces(MediaType.APPLICATION_JSON)
 public class UsuarioService {
 
