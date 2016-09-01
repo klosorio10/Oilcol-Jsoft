@@ -39,7 +39,7 @@ public class CampoEntity implements Serializable {
  
     private String ciudad;
  
-    @OneToMany(cascade=ALL, mappedBy="campo")
+    @OneToMany(cascade=ALL,  mappedBy="campo")
     private List<PozoEntity> pozos= new ArrayList<PozoEntity>();
 
    

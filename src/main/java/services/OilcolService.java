@@ -17,8 +17,10 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -73,7 +75,7 @@ public class OilcolService {
         List<PozoEntity> pozos = q.getResultList();
         for (int i=0;i<pozos.size();i++){
         CampoEntity campo= pozos.get(i).getCampo();
-        campo.setPozos(null);
+        if(campo!=null)campo.setPozos(null);
               
          }
            
@@ -102,7 +104,7 @@ public class OilcolService {
     
 
     @POST
-    @Path("/agregarCampo")
+    @Path("/addCampo")
     @Produces(MediaType.APPLICATION_JSON)
     public Response createCampo(CampoDTO campo) {
         JSONObject rta = new JSONObject();
@@ -132,7 +134,7 @@ public class OilcolService {
     
     
     @POST
-    @Path("/agregarCampo2")
+    @Path("/addCampoYpozos")
     @Produces(MediaType.APPLICATION_JSON)
     public Response createCampo2(CampoDTO campo) {
         JSONObject rta = new JSONObject();
@@ -146,6 +148,10 @@ public class OilcolService {
             PozoDTO pozo=campo.getPozos().get(i);
             PozoEntity nuevo=new PozoEntity();
             nuevo.setNombre(pozo.getNombre());
+            
+            
+            
+            
             nuevo.setCampo(campoTmp);
             lista.add(nuevo);
            try {
@@ -189,15 +195,25 @@ public class OilcolService {
     
     
     @POST
-    @Path("/agregarPozo")
+    @Path("/addPozo")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createPozo(PozoDTO campo) {
+    public Response createPozo(PozoDTO pozo) {
         JSONObject rta = new JSONObject();
         PozoEntity campoTmp = new PozoEntity();
         
-        campoTmp.setNombre(campo.getNombre());
-        //campoTmp.setNombre(campo.getNombre());
-       // campoTmp.setPozos(campo.getPozos());        
+        //campoTmp.setNombre(pozo.getNombre());
+        if(pozo.getNombre()!=null && !pozo.getNombre().equals("")) 
+            campoTmp.setNombre(pozo.getNombre());
+        if(pozo.getConsumoEnergetico()!=0.0 )
+            campoTmp.setConsumoEnergetico(pozo.getConsumoEnergetico());
+        
+        campoTmp.setEmergencia(pozo.isEmergencia());
+        if(pozo.getEstado()!=null && pozo.getEstado().equals(""))
+        campoTmp.setEstado(pozo.getEstado());
+        if(pozo.getNumeroBarriles()!=0.0)
+          campoTmp.setNumeroBarriles(pozo.getNumeroBarriles());
+        if(pozo.getTemperatura()!=0.0)
+         campoTmp.setTemperatura(pozo.getTemperatura());      
  
         try {
             entityManager.getTransaction().begin();
@@ -220,39 +236,95 @@ public class OilcolService {
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(rta).build();
     } 
     
-    @POST
-    @Path("/add")
+    
+    
+    
+    @PUT
+    @Path("/editPozo/{id: \\d+}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createCompetitor(CompetitorDTO competitor) {
+    public Response updatePozo(@PathParam("id") Long id, PozoDTO pozo) {
+    
         JSONObject rta = new JSONObject();
-        Competitor competitorTmp = new Competitor();
-        competitorTmp.setAddress(competitor.getAddress());
-        competitorTmp.setAge(competitor.getAge());
-        competitorTmp.setCellphone(competitor.getCellphone());
-        competitorTmp.setCity(competitor.getCity());
-        competitorTmp.setCountry(competitor.getCountry());
-        competitorTmp.setName(competitor.getName());
-        competitorTmp.setSurname(competitor.getSurname());
-        competitorTmp.setTelephone(competitor.getTelephone());
- 
-        try {
+        if (pozo != null) {
+        PozoEntity entity = entityManager.find(PozoEntity.class, id);
+        if(entity ==null)entity=new PozoEntity();
+        entity.setId(id);
+        
+        if(pozo.getNombre()!=null && !pozo.getNombre().equals("")) 
+            entity.setNombre(pozo.getNombre());
+        if(pozo.getConsumoEnergetico()!=0.0 )
+            entity.setConsumoEnergetico(pozo.getConsumoEnergetico());
+        
+        entity.setEmergencia(pozo.isEmergencia());
+        if(pozo.getEstado()!=null && pozo.getEstado().equals(""))
+        entity.setEstado(pozo.getEstado());
+        if(pozo.getNumeroBarriles()!=0.0)
+          entity.setNumeroBarriles(pozo.getNumeroBarriles());
+        if(pozo.getTemperatura()!=0.0)
+         entity.setTemperatura(pozo.getTemperatura());
+      //  entityManager.merge(entity);
+       try {
             entityManager.getTransaction().begin();
-            entityManager.persist(competitorTmp);
+            entityManager.merge(entity);
             entityManager.getTransaction().commit();
-            entityManager.refresh(competitorTmp);
-            rta.put("competitor_id", competitorTmp.getId());
+           // entityManager.refresh(entity);
+            rta.put("pozo_id", entity.getId());
+          
+            
         } catch (Throwable t) {
             t.printStackTrace();
             if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback();
             }
-            competitorTmp = null;
+            entity = null;
         } finally {
             entityManager.clear();
             entityManager.close();
         }
+        }
         return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(rta).build();
-    } 
+    
+        }
+    
+    
+    @DELETE
+    @Path("/deletePozo/{id: \\d+}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deletePozo(@PathParam("id") Long id) {
+        JSONObject rta = new JSONObject();
+                  
+          try {
+              PozoEntity entity=entityManager.find(PozoEntity.class, id);
+              entity.setCampo(null);
+                if(entity!=null){
+                     entityManager.getTransaction().begin();
+                     entityManager.merge(entity);
+                     entityManager.remove(entity);
+                     entityManager.getTransaction().commit();
+                     // entityManager.refresh(entity);
+                    rta.put("pozo_id", entity.getId());
+                }
+          
+            
+        } catch (Throwable t) {
+            t.printStackTrace();
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            
+        } finally {
+            entityManager.clear();
+            entityManager.close();
+        }
+           
+        
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(rta).build();
+    }
+    
+    
+     
+    
+   
     
     
        @POST
