@@ -86,7 +86,7 @@ public class OilcolService {
     @Path("/getPozo/{id: \\d+}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPozo(@PathParam("id") Long id) {
-        System.out.println("entro");
+       
         PozoEntity pozo =entityManager.find(PozoEntity.class, id);
         PozoDTO encontrado=new PozoDTO();
         if(pozo!=null){
@@ -101,7 +101,58 @@ public class OilcolService {
      return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(encontrado).build();
      } 
     
+    @DELETE
+    @Path("/deleteCampo/{id: \\d+}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteCampo(@PathParam("id") Long id) {
+        JSONObject rta = new JSONObject();
+                  
+          try {
+              CampoEntity entity=entityManager.find(CampoEntity.class, id);
+              //entity.setCampo(null);
+                if(entity!=null){
+                     entityManager.getTransaction().begin();
+                    // entityManager.merge(entity);
+                     entityManager.remove(entity);
+                     entityManager.getTransaction().commit();
+                     // entityManager.refresh(entity);
+                    rta.put("campo_id", entity.getId());
+                }
+           } catch (Throwable t) {
+            t.printStackTrace();
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+         } finally {
+            entityManager.clear();
+            entityManager.close();
+        }
+          return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(rta).build();
+    }
     
+    
+    @GET
+    @Path("/getCampo/{id: \\d+}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCampo(@PathParam("id") Long id) {
+       CampoEntity campo =entityManager.find(CampoEntity.class, id);
+       CampoDTO encontrado=null;
+       if(campo!=null){
+         encontrado=new CampoDTO();
+        
+            encontrado.setCiudad(campo.getCiudad());
+            encontrado.setId(campo.getId());
+            encontrado.setNombre(campo.getNombre());
+            List<PozoEntity> pozos = campo.getPozos();
+            List<PozoDTO>lista=new ArrayList<PozoDTO>();
+        for (int i=0;i<pozos.size();i++){
+            lista.add(pozoEntity_DTO(pozos.get(i)));
+        }
+            
+            encontrado.setPozos(lista);
+        }
+     return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(encontrado).build();
+      }
 
     @POST
     @Path("/addCampo")
@@ -111,8 +162,7 @@ public class OilcolService {
         CampoEntity campoTmp = new CampoEntity();
         campoTmp.setCiudad(campo.getCiudad());
         campoTmp.setNombre(campo.getNombre());
-        
- 
+         
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(campoTmp);
@@ -146,10 +196,10 @@ public class OilcolService {
         //campoTmp.s
         for(int i=0;i<campo.getPozos().size();i++){
             PozoDTO pozo=campo.getPozos().get(i);
-            PozoEntity nuevo=new PozoEntity();
-            nuevo.setNombre(pozo.getNombre());
+           // PozoEntity nuevo=new PozoEntity();
+            //nuevo.setNombre(pozo.getNombre());
             
-            
+            PozoEntity nuevo=pozoDTO_Entity(pozo);
             
             
             nuevo.setCampo(campoTmp);
@@ -295,8 +345,9 @@ public class OilcolService {
                   
           try {
               PozoEntity entity=entityManager.find(PozoEntity.class, id);
-              entity.setCampo(null);
+              
                 if(entity!=null){
+                    entity.setCampo(null);
                      entityManager.getTransaction().begin();
                      entityManager.merge(entity);
                      entityManager.remove(entity);
@@ -348,5 +399,41 @@ public class OilcolService {
 
     } 
 
-
+    /**
+     *
+     * @param pozo
+     * @return
+     */
+    public PozoDTO pozoEntity_DTO(PozoEntity pozo){
+    
+    PozoDTO encontrado=new PozoDTO();
+        if(pozo!=null){
+            encontrado.setId(pozo.getId());
+            encontrado.setNombre(pozo.getNombre());
+            encontrado.setConsumoEnergetico(pozo.getConsumoEnergetico());
+            encontrado.setEmergencia(pozo.isEmergencia());
+            encontrado.setEstado(pozo.getEstado());
+            encontrado.setNumeroBarriles(pozo.getNumeroBarriles());
+            encontrado.setTemperatura(pozo.getTemperatura());
+        }
+        return encontrado;
+}
+    
+    public PozoEntity pozoDTO_Entity(PozoDTO  pozo){
+    
+    PozoEntity encontrado=new PozoEntity();
+        if(pozo!=null){
+            encontrado.setId(pozo.getId());
+            encontrado.setNombre(pozo.getNombre());
+            encontrado.setConsumoEnergetico(pozo.getConsumoEnergetico());
+            encontrado.setEmergencia(pozo.isEmergencia());
+            encontrado.setEstado(pozo.getEstado());
+            encontrado.setNumeroBarriles(pozo.getNumeroBarriles());
+            encontrado.setTemperatura(pozo.getTemperatura());
+        }
+        return encontrado;
+}
+            
+    
+    
 }
