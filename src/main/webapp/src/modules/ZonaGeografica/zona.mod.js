@@ -5,6 +5,6 @@
  */
 (function(ng){
 
-var appHotel = ng.module('AppHotel',["ui.bootstrap"]);
+var appZona = ng.module('AppZona',["ui.bootstrap"]);
 
 })(window.angular);
