@@ -6,16 +6,16 @@
  */
 (function(ng)
 {
-    var mod = ng.module("AppEvento");
+    var mod = ng.module("AppCampo");
     
-    mod.controller('eventoCtrl', ['$scope','eventoSVC','itinerarioSVC', function ($scope,svc, svcItinerario){
+    mod.controller('campoCtrl', ['$scope','campoSVC','CamposSVC', function ($scope,svc, svcCampo){
         $scope.alerts =[];
         $scope.currentRecord = {
             id: undefined,
             nombre: '',
             fechaInicio: '',
             fechaFinal: '',
-            ciudad:{}
+            camp:{}
         };
         
         $scope.records = [];
