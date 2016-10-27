@@ -1,119 +1,138 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package dto;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import models.PozoEntity;
+
+
+
+
+
 /**
  *
- * @author Mauricio
+ * @author Johan
  */
 public class CampoDTO {
  
-    private String name;
+    private Long id;
+
+    private String nombre;
     
-    private String surname;
+    private String ciudad;
+        
+    private List<PozoDTO> pozos=new ArrayList<PozoDTO>();
     
-    private int age;
+    private PozoDTO pozo;
     
-    private String telephone;
+    private Date fechaCreacion;
     
-    private String cellphone;
+    private String fecha;
+
+    public PozoDTO getPozo() {
+        return pozo;
+    }
+
+    public void setPozo(PozoDTO pozo) {
+        this.pozo = pozo;
+    }
     
-    private String address;
-    
-    private String city;
-    
-    private String country;
-    
-    private String username;
-    
-    private String password;
     
     public CampoDTO(){
         
     }
-
-    public String getName() {
-        return name;
+    
+  public Date getFechaCreacion(){
+       return this.fechaCreacion;
+   }
+   
+   public void setFechaCreacion(Date fecha){
+     //  System.out.println("fecha: "+fecha.getCalendarType());
+       this.fechaCreacion=fecha;
+   }
+   
+   public void setFecha(Date fecha){
+       //System.out.println("fecha: "+fecha.getCalendarType());
+      //   fecha.add(Calendar.DATE, 1);
+       //  Date date = fecha.getTime();             
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date1 = format1.format(fecha);   
+      this.fecha = date1; 
+       
+   }
+   public String getFecha(){
+       return this.fecha;
+   }
+    
+    public void iniciarFecha(){
+        setFecha(new Date());
+    }
+    
+   
+    public PozoDTO agregarPozo(String nombreP){
+        
+        PozoDTO nuevo=new PozoDTO();
+        nuevo.setNombre(nombreP);
+        nuevo.setEmergencia(false);
+        nuevo.setEstado("normal");
+        pozos.add(nuevo);
+        return nuevo;
+    }
+            
+    public Long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public int getAge() {
-        return age;
+    public String getCiudad() {
+        return ciudad;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 
-    public String getTelephone() {
-        return telephone;
+      
+    public List<PozoDTO> getPozos() {
+        return pozos;
     }
+    
+   /* public List<PozoEntity> getPozosEntity( List<PozoDTO> pozosDTO) {
+        List<PozoEntity>lista=new List<PozoEntity>
+        for(pozos)
+        return pozos;
+    }*/
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public String getCellphone() {
-        return cellphone;
-    }
-
-    public void setCellphone(String cellphone) {
-        this.cellphone = cellphone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
+    public void setPozos(List<PozoDTO> pozos) {
+        this.pozos = pozos;
     }
     
     
-    public String getUsername() {
-        return username;
+    public PozoEntity convertirAentidad(PozoDTO dto){
+        PozoEntity pozoN=new PozoEntity();
+        pozoN.setNombre(dto.getNombre());
+        return pozoN;
     }
-
-    public void setUsername(String username) {
-        this.username = username;
+    
+     
+    public PozoDTO convertirAdto(PozoEntity entity){
+        PozoDTO pozoN=new PozoDTO();
+        pozoN.setId(entity.getId());
+        pozoN.setNombre(entity.getNombre());
+        return pozoN;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+   
 }

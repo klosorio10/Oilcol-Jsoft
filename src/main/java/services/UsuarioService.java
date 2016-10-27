@@ -7,7 +7,6 @@ package services;
 
 import main.PersistenceManager;
 import models.Competitor;
-import dto.CompetitorDTO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -26,9 +25,9 @@ import org.codehaus.jettison.json.JSONObject;
  *
  * @author Mauricio
  */
-@Path("/competitors")
+@Path("/usuarios")
 @Produces(MediaType.APPLICATION_JSON)
-public class CompetitorService {
+public class UsuarioService {
 
     @PersistenceContext(unitName = "Oilcol")
     EntityManager entityManager; 
@@ -52,7 +51,7 @@ public class CompetitorService {
     } 
 
     
-       @POST
+    /*   @POST
     @Path("/add")
     @Produces(MediaType.APPLICATION_JSON)
     public Response createCompetitor(CompetitorDTO competitor) {
@@ -106,7 +105,7 @@ public class CompetitorService {
                 return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(competitors).build();
              }
 
-    } 
+    } */
 
 
 }

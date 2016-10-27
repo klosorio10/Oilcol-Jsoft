@@ -1,119 +1,115 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package dto;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 /**
  *
- * @author Mauricio
+ * @author Johan
  */
 public class PozoDTO {
  
-    private String name;
+    private Long id;
+
+    private String nombre;
     
-    private String surname;
+    private String estado;
     
-    private int age;
+    private double temperatura;
+
+    private double consumoEnergetico;
     
-    private String telephone;
+    private double numeroBarriles;
     
-    private String cellphone;
+    private boolean emergencia; 
     
-    private String address;
+    private Date fechaCreacion;
     
-    private String city;
-    
-    private String country;
-    
-    private String username;
-    
-    private String password;
-    
+    private String fecha;
+ 
     public PozoDTO(){
         
     }
-
-    public String getName() {
-        return name;
+    
+    public Long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+ public String getEstado() {
+        return estado;
     }
 
-    public int getAge() {
-        return age;
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    public double getTemperatura() {
+        return temperatura;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setTemperatura(double temperatura) {
+        this.temperatura = temperatura;
     }
 
-    public String getTelephone() {
-        return telephone;
+    public double getConsumoEnergetico() {
+        return consumoEnergetico;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
+    public void setConsumoEnergetico(double consumoEnergetico) {
+        this.consumoEnergetico = consumoEnergetico;
     }
 
-    public String getCellphone() {
-        return cellphone;
+    public double getNumeroBarriles() {
+        return numeroBarriles;
     }
 
-    public void setCellphone(String cellphone) {
-        this.cellphone = cellphone;
+    public void setNumeroBarriles(double numeroBarriles) {
+        this.numeroBarriles = numeroBarriles;
     }
 
-    public String getAddress() {
-        return address;
+    public boolean isEmergencia() {
+        return emergencia;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
+    public void setEmergencia(boolean emergencia) {
+        this.emergencia = emergencia;
     }
     
-    
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+   public Date getFechaCreacion(){
+       return this.fechaCreacion;
+   }
+   
+   public void setFechaCreacion(Date fecha){
+     //  System.out.println("fecha: "+fecha.getCalendarType());
+       this.fechaCreacion=fecha;
+   }
+   
+   public void setFecha(Date fecha){
+       //System.out.println("fecha: "+fecha.getCalendarType());
+      //   fecha.add(Calendar.DATE, 1);
+       //  Date date = fecha.getTime();             
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date1 = format1.format(fecha);   
+      this.fecha = date1; 
+       
+   }
+   public String getFecha(){
+       return this.fecha;
+   }
+   
+   
 }
