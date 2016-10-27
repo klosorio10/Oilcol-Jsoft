@@ -5,34 +5,34 @@
  */
 (function(ng)
 {
-    var mod = ng.module("AppHotel");
-  mod.controller('hotelCtrl', ['$scope','hotelSVC', function ($scope,svc){
+    var mod = ng.module("AppZona");
+  mod.controller('zonaCtrl', ['$scope','zonaSVC', function ($scope,svc){
     //Acordarse que estas variables no son universales, falta implementar
     //un servicio que las vuelvas de este carácter
-    $scope.hoteles =  svc.darHoteles();
+    $scope.zonas =  svc.darZonas();
         
-        $scope.newHotel = function ()
+        $scope.newZona = function ()
         {
-           svc.agregarHotel({nombre:$scope.nombreHotel, fechaInicio: $scope.fechaInicio, fechaFinal:$scope.fechaFinal});
+           svc.agregarZona({nombre:$scope.nombreZona, fechaInicio: $scope.fechaInicio, fechaFinal:$scope.fechaFinal});
 
-        console.log($scope.hoteles[0].nombre);
+        console.log($scope.zonas[0].nombre);
         
         $scope.id="";
-        $scope.nombreHotel="";
+        $scope.nombreZona="";
 	$scope.fechaInicio="";
 	$scope.fechaFinal="";
         };
 
         $scope.borrar = function()
         {
-            svc.borrarHotel($scope.hotelSeleccionado);
-            $scope.hoteles =  svc.darHoteles();
+            svc.borrarZona($scope.zonaSeleccionado);
+            $scope.zonas=  svc.darZonas();
         };
 
-        $scope.guardarTodosLosHoteles = function()
+        $scope.guardarTodosLasZonas = function()
         {
-            var hotelActual = svc.darHotelActualId();
-            svc.agregarHotelPorId(hotelActual, $scope.hoteles);
+            var zonaActual = svc.darZonaActualId();
+            svc.agregarZonaPorId(zonaActual, $scope.zonas);
         }
 
 }]);

@@ -6,7 +6,7 @@
 (function(ng){
 
 var appPozo = ng.module('AppPozo',["ui.bootstrap"]);
-appPozo.constant("contextoCiudad", "http://172.24.42.133:8080/oilcol/getPozos");
+appPozo.constant("contextoPozo", "http://172.24.42.133:8080/oilcol/getPozos");
 
 
 })(window.angular);
