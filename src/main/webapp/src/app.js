@@ -7,7 +7,6 @@
         "AppCampo",
         "AppPozo",
         "AppHotel"
-        
     ]);
 
 
@@ -16,7 +15,7 @@
         }]);
 
     mod.config(['$stateProvider','$urlRouterProvider', function($stateProvider,$urlRouterProvider) {
-            $urlRouterProvider.otherwise("/JSOFT");
+            $urlRouterProvider.otherwise("/oilcol");
             $stateProvider
                    
                      .state('pozo',{
@@ -26,7 +25,7 @@
                         templateUrl:"src/modules/Pozo/nuevo.html"
                     })
                     .state('campo',{
-                        url:'/ciudad',
+                        url:'/campo',
 //                        controller: "",
 //                        controllerAs: "ctrl",
                         templateUrl:"src/modules/Campo/nuevo.html"

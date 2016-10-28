@@ -1,8 +1,14 @@
 package main;
 
+import java.awt.Desktop;
+import java.io.File;
 import javax.persistence.EntityManager;
+import javax.xml.ws.handler.Handler;
 
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.DefaultHandler;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 /**
@@ -22,6 +28,7 @@ public class Main {
         String webPort = System.getenv("PORT");
         if (webPort == null || webPort.isEmpty()) {
             webPort = "8080";
+            
         }
  
         Server server = new Server(Integer.valueOf(webPort));
@@ -39,7 +46,7 @@ public class Main {
         // container. Setting parent loader priority to true changes this behavior.
         // Read more here: http://wiki.eclipse.org/Jetty/Reference/Jetty_Classloading
         root.setParentLoaderPriority(true);
- 
+        
         server.setHandler(root);
  
         server.start();
